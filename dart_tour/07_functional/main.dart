@@ -21,14 +21,15 @@ void main() {
 // e.g., final count = makeCounter(0); count() → 1; count() → 2; count() → 3
 Function makeCounter(int start) {
   // Hint: use a local variable captured by the closure
-  return () => 0; // replace
+  var current = start;
+  return () => ++current; // replace
 }
 
 // TODO: Implement `makeAdder`
 // Returns a function that adds `n` to its argument
 // e.g., final add5 = makeAdder(5); add5(3) → 8
 int Function(int) makeAdder(int n) {
-  return (x) => 0; // replace
+  return (x) => x + n; // replace
 }
 
 void _exercise1_closures() {
@@ -56,14 +57,16 @@ List<R> filterAndTransform<T, R>(
   Predicate<T> predicate,
   Transformer<T, R> transform,
 ) {
-  return []; // replace
+  // Hint: use .where and .map 
+
+  return items.where(predicate).map(transform).toList(); // replace
 }
 
 // TODO: Implement `pipeline<T>`
 // Takes a value and a list of transformers, applying them left-to-right
 // e.g., pipeline(5, [(x)=>x*2, (x)=>x+1]) → 11
 T pipeline<T>(T initial, List<T Function(T)> transforms) {
-  return initial; // replace — use fold
+  return transforms.fold(initial, (acc, f) => f(acc)); // replace — use fold
 }
 
 void _exercise2_higherOrder() {
@@ -89,7 +92,7 @@ void _exercise2_higherOrder() {
 // TODO: Implement `compose<T>` — returns a single function that applies
 // fn2 after fn1 (right-to-left: f∘g = f(g(x)))
 T Function(T) compose<T>(T Function(T) fn1, T Function(T) fn2) {
-  return (x) => x; // replace: return (x) => fn1(fn2(x))
+  return (x) => fn1(fn2(x)); // replace: return (x) => fn1(fn2(x))
 }
 
 String sanitize(String s) => s.trim().toLowerCase();
@@ -112,7 +115,7 @@ void _exercise3_functionComposition() {
 // Returns a Record with named fields `quotient` and `remainder`
 // e.g., divmod(17, 5) → (quotient: 3, remainder: 2)
 ({int quotient, int remainder}) divmod(int a, int b) {
-  return (quotient: 0, remainder: 0); // replace
+  return (quotient: a ~/ b, remainder: a % b); // replace
 }
 
 // TODO: Implement `parseToken`
@@ -120,7 +123,11 @@ void _exercise3_functionComposition() {
 // return a record with fields: header, payload, signature (all Strings)
 // If the format is invalid (not 3 parts), return ('', '', '')
 ({String header, String payload, String signature}) parseToken(String token) {
-  return (header: '', payload: '', signature: ''); // replace
+  final parts = token.split('.');
+  if (parts.length != 3) {
+    return (header: '', payload: '', signature: '');
+  }
+  return (header: parts[0], payload: parts[1], signature: parts[2]);
 }
 
 void _exercise4_records() {
