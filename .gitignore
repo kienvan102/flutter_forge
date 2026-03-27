@@ -1,0 +1,44 @@
+# ── Flutter / Dart ─────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+
+# Generated code (commit the .g.dart files for apps, or let CI regenerate)
+# *.g.dart
+# *.freezed.dart
+
+# ── Sensitive / Secrets ────────────────────────────────────────
+secure_vault/android/key.properties
+secure_vault/android/app/keystore.jks
+secure_vault/android/app/*.jks
+secure_vault/ios/Runner/GoogleService-Info.plist
+secure_vault/google-services.json
+secure_vault/.env
+*.env
+
+# ── Build artifacts ────────────────────────────────────────────
+secure_vault/debug-symbols/
+*.apk
+*.aab
+*.ipa
+*.app
+
+# ── IDE ───────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ── macOS ─────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+
+# ── Windows ───────────────────────────────────────────────────
+Thumbs.db
+
+# ── Pub cache ─────────────────────────────────────────────────
+.pub-cache/
+.pub/
