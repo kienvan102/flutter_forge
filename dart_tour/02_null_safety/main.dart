@@ -21,17 +21,17 @@ void main() {
 // ─── Exercise 1: Nullable Types ───────────────────────────────────────────────
 void _exercise1_nullableTypes() {
   // TODO: Declare a nullable String `maybeNull` and assign null to it
-  String? maybeNull = 'REPLACE_ME'; // hint: this should be null
+  String? maybeNull = null; // hint: this should be null
 
   // TODO: Declare a non-nullable String `definitelyHello` = "hello"
-  String definitelyHello = 'REPLACE_ME';
+  String definitelyHello = 'hello'; // replace
 
   // TODO: Use the null assertion operator (!) to get the length of maybeNull
   // Only valid because we know at this point it's not null after the check below.
   // First assign a value to maybeNull so it's safe to force-unwrap:
   maybeNull = 'dart';
-  final len = 0; // replace: use maybeNull!.length
-
+  final len = maybeNull!.length; // replace: use maybeNull!.length
+  
   assert(maybeNull == null || maybeNull == 'dart', '❌ Ex1: maybeNull should be "dart" after reassign');
   assert(definitelyHello == 'hello', '❌ Ex1: definitelyHello should be "hello"');
   assert(len == 4, '❌ Ex1: len should be 4 (length of "dart")');
@@ -43,14 +43,14 @@ void _exercise1_nullableTypes() {
 // Return `name` if it's not null, otherwise return "Anonymous"
 // Use the ?? operator (do NOT use if/else)
 String defaultName(String? name) {
-  return 'REPLACE_ME';
+  return name ?? 'Anonymous'; // replace
 }
 
 // TODO: Implement `upperOrNull`
 // Return the uppercase version of s if s is not null, otherwise return null
 // Use the ?. operator
 String? upperOrNull(String? s) {
-  return null; // replace
+  return s?.toUpperCase(); // replace
 }
 
 // TODO: Implement `ensurePositive`
@@ -58,7 +58,7 @@ String? upperOrNull(String? s) {
 // Return the value after the assignment.
 int ensurePositive(int? value) {
   // value ??= ???;
-  return value ?? -999; // replace this line
+  return value ?? 0; // replace this line
 }
 
 void _exercise2_nullAwareOperators() {
@@ -84,7 +84,9 @@ class DatabaseConnection {
 
   void initialize(String host, int port) {
     // TODO: assign connectionString = "postgresql://<host>:<port>"
-    connectionString = 'REPLACE_ME';
+    connectionString = "postgresql://<host>:<port>"
+        .replaceAll('<host>', host)
+        .replaceAll('<port>', port.toString());
     _port = port;
   }
 
@@ -112,7 +114,12 @@ void _exercise3_lateVariables() {
 //   "long"       otherwise
 // Use a switch expression (Dart 3+) or if/else
 String describeLength(String? s) {
-  return 'REPLACE_ME';
+  return switch (s) {
+    null => 'no string',
+    '' => 'empty',
+    var str when str.length <= 5 => 'short',
+    _ => 'long',
+  };
 }
 
 void _exercise4_patternMatching() {
