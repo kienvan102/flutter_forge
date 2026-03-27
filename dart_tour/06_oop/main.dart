@@ -43,14 +43,14 @@ class Credentials {
 
   // TODO: add Credentials.fromJson
   factory Credentials.fromJson(Map<String, dynamic> json) {
-    return Credentials('REPLACE_ME', 'REPLACE_ME'); // read from json
+    return Credentials(json['username'] as String, json['password'] as String); // read from json
   }
 
   // TODO: implement maskedPassword getter
-  String get maskedPassword => 'REPLACE_ME';
+  String get maskedPassword => '***${password.substring(password.length - 2)}';
 
   @override
-  String toString() => 'REPLACE_ME';
+  String toString() => 'Credentials($username)';
 }
 
 void _exercise1_classes() {
@@ -72,8 +72,9 @@ void _exercise1_classes() {
 mixin Loggable {
   // TODO: Add a method `log(String message)` that prints "[ClassName] message"
   // Use runtimeType.toString() to get the class name
+
   void log(String message) {
-    print('REPLACE_ME'); // replace: print('[${runtimeType}] $message')
+    print('[${runtimeType}] $message');
   }
 }
 
@@ -94,6 +95,8 @@ mixin Auditable {
 class VaultService with Loggable, Auditable {
   void addEntry(String key) {
     // TODO: call log and audit
+    log('Adding entry: $key');
+    audit('add:$key');
   }
 }
 
@@ -118,18 +121,30 @@ void _exercise2_mixins() {
 //   - `redact(int keepLast)`: returns '***' + last `keepLast` chars
 
 extension StringSecurityExtension on String {
-  bool get isStrongPassword {
-    return false; // TODO: implement
+
+  bool isStrongPassword() {
+    String password = this;
+    if (password.length < 8) return false;
+    if (!password.contains(RegExp(r'[A-Z]'))) return false; // uppercase
+    if (!password.contains(RegExp(r'[a-z]'))) return false; // lowercase
+    if (!password.contains(RegExp(r'[0-9]'))) return false; // digit
+    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) return false; // special char
+    return true; // TODO: implement
   }
 
   String redact(int keepLast) {
-    return 'REPLACE_ME'; // TODO: implement
+    String password = this;
+    if (keepLast >= password.length) {
+      return '***';
+    }
+    String lastChars = password.substring(password.length - keepLast);
+    return '***$lastChars';
   }
 }
 
 void _exercise3_extensions() {
-  assert('Weak'.isStrongPassword == false, '❌ Ex3: "Weak" should not be strong');
-  assert('Str0ng!Pass'.isStrongPassword == true, '❌ Ex3: "Str0ng!Pass" should be strong');
+  assert('Weak'.isStrongPassword() == false, '❌ Ex3: "Weak" should not be strong');
+  assert('Str0ng!Pass'.isStrongPassword() == true, '❌ Ex3: "Str0ng!Pass" should be strong');
   assert('mySecretToken'.redact(4) == '***oken', '❌ Ex3: redact(4) should show last 4 chars');
   print('✅ Exercise 3: Extensions');
 }
@@ -159,9 +174,9 @@ class AuthMfaRequired extends AuthResult {
 //   - For AuthMfaRequired: "MFA required, challenge: ${result.challengeId}"
 String handleAuth(AuthResult result) {
   return switch (result) {
-    AuthSuccess() => 'REPLACE_ME',
-    AuthFailure() => 'REPLACE_ME',
-    AuthMfaRequired() => 'REPLACE_ME',
+    AuthSuccess() => 'Welcome! Token: ${result.token}',
+    AuthFailure() => 'Login failed: ${result.reason}',
+    AuthMfaRequired() => 'MFA required, challenge: ${result.challengeId}',
   };
 }
 
