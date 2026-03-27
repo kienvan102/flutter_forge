@@ -30,14 +30,16 @@ Stream<int> countStream(int max) async* {
 }
 
 Future<void> _exercise1_basicStream() async {
-  final collected = <int>[];
+  // final collected = <int>[];
 
   // TODO: Use `await for` to collect all values from countStream(5)
   // await for (final value in countStream(5)) { collected.add(value); }
-
+  // await for (final value in countStream(5)) {
+  //   collected.add(value);
+  // }
   // TODO: Alternatively, use .toList() to collect all values
   // final collected = await countStream(5).toList();
-
+  final collected = await countStream(5).toList();
   assert(collected.length == 5, '❌ Ex1: should collect 5 items');
   assert(collected.last == 5, '❌ Ex1: last item should be 5');
   print('✅ Exercise 1: Basic Stream');
@@ -57,9 +59,12 @@ Future<void> _exercise2_streamController() async {
 
   // TODO: Add three events to the controller: "hello", "world", "dart"
   // controller.add(???);
-
+    controller.add('hello');
+    controller.add('world');
+    controller.add('dart');
   // TODO: Close the controller (signals end of stream)
   // await controller.close();
+  await controller.close();
 
   await subscription.asFuture<void>().timeout(
     const Duration(seconds: 1),
@@ -82,9 +87,9 @@ Future<void> _exercise3_streamTransformations() async {
   // Then take only the first 3 results (use .take)
   // Collect to list with .toList()
   final result = await numbers
-      .where((n) => false) // replace: n.isEven
-      .map((n) => n) // replace: n * n
-      .take(0) // replace: 3
+      .where((n) => n.isEven) // replace: n.isEven
+      .map((n) => n * n) // replace: n * n
+      .take(3) // replace: 3
       .toList();
 
   // Expected: [4, 16, 36] (first 3 even numbers squared: 2²=4, 4²=16, 6²=36)
@@ -102,7 +107,7 @@ Future<void> _exercise4_broadcastStream() async {
 
   // TODO: Create a StreamController that is a BROADCAST controller
   // Hint: StreamController<int>.broadcast()
-  final controller = StreamController<int>(); // replace with broadcast
+  final controller = StreamController<int>.broadcast(); // replace with broadcast
 
   final listener1 = <int>[];
   final listener2 = <int>[];
