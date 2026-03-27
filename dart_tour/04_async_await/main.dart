@@ -31,10 +31,10 @@ Future<String> fetchUser(int id) async {
 
 Future<void> _exercise1_basicFuture() async {
   // TODO: Await fetchUser(1) and store in `user`
-  final user = 'REPLACE_ME'; // replace — use await
-
+  final user = await fetchUser(1); // replace — use await
+  
   // TODO: Await fetchUser(2) and store in `user2`
-  final user2 = 'REPLACE_ME'; // replace
+  final user2 = await fetchUser(2); // replace
 
   assert(user == 'Alice', '❌ Ex1: user should be "Alice"');
   assert(user2 == 'Bob', '❌ Ex1: user2 should be "Bob"');
@@ -47,20 +47,21 @@ Future<void> _exercise2_errorHandling() async {
   // and store the error message in `errorMsg`.
   // Use try/catch.
   String errorMsg = '';
-  // try {
-  //   await fetchUser(99);
-  // } catch (e) {
-  //   errorMsg = e.toString();
-  // }
+  try {
+    await fetchUser(99);
+  } catch (e) {
+    errorMsg = e.toString();
+  }
 
   // TODO: Use Future.catchError style (chaining) to get the same result
   final errorMsg2 = await fetchUser(99)
       .then((v) => '')
-      .catchError((e) => 'REPLACE_ME'); // return e.toString()
+      .catchError((e) => e.toString()); // return e.toString()
 
-  assert(errorMsg.contains('99') || errorMsg.isEmpty == false || errorMsg2.isNotEmpty,
-      '❌ Ex2: should catch exception from fetchUser(99)');
-  // Lenient check — either approach works
+  assert(errorMsg.contains('99'),
+      '❌ Ex2: errorMsg should contain "99" — did you uncomment and fill the try/catch?');
+  assert(errorMsg2.contains('99') && errorMsg == errorMsg2,
+      '❌ Ex2: errorMsg2 should equal errorMsg — both approaches must produce the same result');
   print('✅ Exercise 2: Error Handling');
 }
 
@@ -75,7 +76,7 @@ Future<void> _exercise3_parallelFutures() async {
 
   // TODO: Fetch posts 1, 2, and 3 IN PARALLEL using Future.wait
   // (NOT three separate awaits — that would be sequential)
-  final results = <String>[]; // replace with await Future.wait([...])
+  final results = await Future.wait([fetchPost(1), fetchPost(2), fetchPost(3)]); // replace with await Future.wait([...])
 
   stopwatch.stop();
 
@@ -97,7 +98,7 @@ Future<void> _exercise3_parallelFutures() async {
 // - Return the uppercase name
 // Use .then() chaining (no async/await allowed here, practice the .then style)
 Future<String> getDisplayName(int id) {
-  return fetchUser(id).then((name) => 'REPLACE_ME'); // transform name to uppercase
+  return fetchUser(id).then((name) => name.toUpperCase()); // transform name to uppercase
 }
 
 Future<void> _exercise4_futureChaining() async {
