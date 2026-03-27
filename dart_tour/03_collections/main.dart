@@ -18,16 +18,16 @@ void main() {
 // ─── Exercise 1: List ─────────────────────────────────────────────────────────
 void _exercise1_list() {
   // TODO: Create a List<String> of 3 programming languages you know
-  final languages = <String>[]; // replace
+  final languages = <String>['Python', 'JavaScript', 'Java']; // replace
 
   // TODO: Add 'Dart' to the list (use .add)
-  // languages.add(???);
+  languages.add('Dart');
 
   // TODO: Remove the first item from the list (use .removeAt)
-  // languages.removeAt(???);
+  languages.removeAt(0);
 
   // TODO: Sort the list alphabetically (in-place)
-  // languages.sort();
+  languages.sort();
 
   // For this exercise to pass:
   // - languages must have exactly 3 items
@@ -43,22 +43,24 @@ void _exercise1_list() {
 void _exercise2_map() {
   // TODO: Create a Map<String, int> mapping language → year introduced
   // Include at least: 'Dart' → 2011, 'Go' → 2009, 'Kotlin' → 2011
-  final Map<String, int> langYear = {}; // replace
+  final Map<String, int> langYear = {'Dart': 2011, 'Go': 2009, 'Kotlin': 2011}; // replace
 
   // TODO: Look up the year for 'Dart' and store in dartYear
-  final dartYear = 0; // replace
+  final dartYear = langYear['Dart'] ?? 0; // replace  
 
   // TODO: Get the year for 'Rust', defaulting to -1 if not found (use ?? or putIfAbsent logic)
-  final rustYear = 0; // replace — should be -1 since Rust isn't in the map
+  final rustYear = langYear['Rust'] ?? -1; // replace — should be -1 since Rust isn't in the map
 
   // TODO: Get all languages released in or after 2010 (use entries + where)
-  final modernLangs = <String>[]; // replace with a filtered list of keys
-
+  final modernLangs = langYear.entries.where((e) => e.value >= 2010).map((e) => e.key).toList();
+  // final modernLangs = <String>[]; // replace with a filtered list of keys
+  print("Modern languages: $modernLangs");
   assert(dartYear == 2011, '❌ Ex2: dartYear should be 2011');
   assert(rustYear == -1, '❌ Ex2: rustYear should be -1 (not in map)');
   assert(modernLangs.contains('Dart') && modernLangs.contains('Kotlin'),
       '❌ Ex2: modernLangs should include Dart and Kotlin');
   assert(!modernLangs.contains('Go'), '❌ Ex2: Go (2009) should NOT be in modernLangs');
+  assert(modernLangs.contains('Go') == false, '❌ Ex2: Go should NOT be in modernLangs');
   print('✅ Exercise 2: Map');
 }
 
@@ -68,13 +70,14 @@ void _exercise3_set() {
   final b = {'dart', 'firebase', 'supabase'};
 
   // TODO: Get the intersection of a and b (items in both)
-  final intersection = <String>{}; // replace
-
+  // final intersection = <String>{}; // replace
+  final intersection = a.intersection(b);
   // TODO: Get the union of a and b (all items)
-  final union = <String>{}; // replace
-
+  // final union = <String>{}; // replace
+  final union = a.union(b);
   // TODO: Get items in a but NOT in b (difference)
-  final onlyInA = <String>{}; // replace
+  // final onlyInA = <String>{}; // replace
+  final onlyInA = a.difference(b);
 
   assert(intersection.length == 2, '❌ Ex3: intersection should have 2 items');
   assert(intersection.containsAll(['dart', 'firebase']),
@@ -90,19 +93,22 @@ void _exercise4_iterable() {
   final numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   // TODO: Get all even numbers (use .where)
-  final evens = <int>[]; // replace
+  final evens = numbers.where((n) => n.isEven).toList(); // replace
 
   // TODO: Square each number (use .map), return a List<int>
-  final squares = <int>[]; // replace
+  // final squares = <int>[]; // replace
+  final squares = numbers.map((n) => n * n).toList();
 
   // TODO: Sum all numbers (use .fold or .reduce)
-  final sum = 0; // replace
-
+  // final sum = 0; // replace
+  final sum = numbers.reduce((a, b) => a + b);
+  // Using fold: start with 0, then add each number
   // TODO: Check if any number is greater than 9 (use .any)
-  final hasLarge = false; // replace
-
+  // final hasLarge = false; // replace
+  final hasLarge = numbers.any((n) => n > 9);
   // TODO: Find the first number > 5 (use .firstWhere)
-  final firstLarge = 0; // replace
+  // final firstLarge = 0; // replace
+  final firstLarge = numbers.firstWhere((n) => n > 5, orElse: () => -1);
 
   assert(evens.length == 5 && evens.every((n) => n.isEven),
       '❌ Ex4: evens should be [2,4,6,8,10]');
@@ -121,14 +127,14 @@ void _exercise5_collectionLiterals() {
   final includeExtra = true;
 
   // TODO: Use spread operator (...) to combine base and extra into one list
-  final combined = <int>[]; // replace — use [...base, ...extra]
+  final combined = [...base, ...extra]; // replace — use [...base, ...extra]
 
   // TODO: Use collection-if to conditionally include extra
   // If includeExtra is true, include extra, otherwise just base
-  final conditional = <int>[]; // replace — use [if (includeExtra) ...extra, ...base]
+  final conditional = [if (includeExtra) ...extra, ...base]; // replace — use [if (includeExtra) ...extra, ...base]
 
   // TODO: Use collection-for to build ["item_1", "item_2", "item_3"]
-  final items = <String>[]; // replace — use [for (var i in [1,2,3]) 'item_$i']
+  final items = [for (var i in [1,2,3]) 'item_$i']; // replace — use [for (var i in [1,2,3]) 'item_$i']
 
   assert(combined.length == 5, '❌ Ex5: combined should have 5 items');
   assert(conditional.length == 5, '❌ Ex5: conditional (includeExtra=true) should have 5 items');
