@@ -20,15 +20,15 @@ void main() {
 void _exercise1_variables() {
   // TODO: Declare a variable `name` using type inference (var) with value "Flutter"
   // var name = ???;
-  var name = 'REPLACE_ME';
+  var name = 'Flutter';
 
   // TODO: Declare a final variable `version` with value 3.22
   // final version = ???;
-  final version = 0.0;
+  final version = 3.22;
 
   // TODO: Declare a compile-time constant `maxRetries` = 3
   // const maxRetries = ???;
-  const maxRetries = 0;
+  const maxRetries = 3;
 
   // Assertions — do not modify
   assert(name == 'Flutter', '❌ Ex1: name should be "Flutter"');
@@ -40,17 +40,17 @@ void _exercise1_variables() {
 // ─── Exercise 2: Functions ────────────────────────────────────────────────────
 // TODO: Implement `add` — returns the sum of two integers
 int add(int a, int b) {
-  return 0; // replace
+  return a + b; // replace
 }
 
 // TODO: Implement `greet` using arrow syntax (=>)
 // It should return "Hello, <name>!" — e.g., greet("Van") → "Hello, Van!"
-String greet(String name) => 'REPLACE_ME';
+String greet(String name) => 'Hello, $name!';
 
 // TODO: Implement `repeat` with a named optional parameter `times` (default = 2)
 // It should return the string repeated `times` times — e.g., repeat("hi") → "hihi"
 String repeat(String s, {int times = 2}) {
-  return ''; // replace
+  return s * times;
 }
 
 void _exercise2_functions() {
@@ -68,12 +68,13 @@ void _exercise3_strings() {
 
   // TODO: Use string interpolation to build:
   // "Dart was created in 2011"
-  final sentence = 'REPLACE_ME';
+  final sentence = '$lang was created in $year';  // replace
 
   // TODO: Use a multi-line string (triple-quote) to create exactly:
   // line1: "Hello"
   // line2: "World"
-  final multiLine = 'REPLACE_ME';
+  final multiLine = '''Hello
+World'''; // replace
 
   assert(sentence == 'Dart was created in 2011', '❌ Ex3: sentence mismatch');
   assert(multiLine.split('\n').length == 2, '❌ Ex3: multiLine should have 2 lines');
@@ -89,7 +90,15 @@ void _exercise3_strings() {
 //   "small"    if 1 <= n <= 9
 //   "big"      if n >= 10
 String classify(int n) {
-  return 'REPLACE_ME'; // replace with if/else or switch expression
+  if (n < 0) {
+    return 'negative';
+  } else if (n == 0) {
+    return 'zero';
+  } else if (n >= 1 && n <= 9) {
+    return 'small';
+  } else {
+    return 'big';
+  }
 }
 
 void _exercise4_controlFlow() {
