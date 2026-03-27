@@ -73,6 +73,7 @@ dart --version      # ≥ 3.4
 ```bash
 cd dart_tour
 dart run 01_basics/main.dart
+dart run --enable-asserts 01_basics/main.dart 
 ```
 
 ### Run SecureVault
