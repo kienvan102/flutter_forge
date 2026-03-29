@@ -3,12 +3,35 @@
 /// Topics: constructors (named, factory), getters/setters, abstract classes,
 ///         interfaces (implements), mixins, extensions, sealed classes (Dart 3).
 ///
-/// 💡 Backend Lens:
-///   mixin     ≈  Go embedded struct (but type-safe) / Ruby module
-///   extension ≈  Kotlin extension function / C# extension method
-///   sealed    ≈  Rust enum / Kotlin sealed class — exhaustive pattern matching
-///
 /// Run: dart run --enable-asserts 06_oop/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// Primary constructor — declared in the class signature:
+///         Credentials(this.username, this.password)
+///   this.field          — shorthand; assigns the parameter directly to the field
+///   : field = expr      — initializer list; runs BEFORE the constructor body
+///
+/// Named constructor — additional constructor with a custom name:
+///         Credentials.withTimestamp(username, password, createdAt)
+///         allows multiple ways to create the same class
+///
+/// Factory constructor — declared with `factory`; you control what is returned:
+///         factory Credentials.fromJson(Map json) { return Credentials(...); }
+///         can return a cached instance, a subtype, or compute fields before calling super
+///
+/// Getter — a computed read-only property accessed like a field (no parentheses):
+///         String get maskedPassword => '***' + password.substring(password.length - 2);
+///
+/// mixin — a reusable block of methods mixed into a class with `with`:
+///         class VaultService with Loggable, Auditable { }
+///         multiple mixins are allowed; they cannot declare required constructors
+///
+/// extension — adds new methods to an existing type without subclassing:
+///         extension StringSecurityExtension on String { bool get isStrongPassword ... }
+///         called exactly like a normal method: 'Str0ng!'.isStrongPassword
+///
+/// sealed class — all subtypes must be declared in the same file; compiler knows them all
+///         switch on a sealed class is EXHAUSTIVE — the compiler errors if a case is missing
 
 void main() {
   _exercise1_classes();

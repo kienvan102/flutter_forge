@@ -7,6 +7,24 @@
 ///   dart run --enable-asserts 01_basics/main.dart
 ///
 /// Expected output: all lines print ✅
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// var — type inference, Dart infers the type from the assigned value
+///         var name = 'Flutter';  →  Dart knows name is a String
+/// final — set once at runtime, cannot be reassigned after first assignment
+///         final version = 3.22;  →  version can never be changed
+/// const — compile-time constant, value must be known at compile time
+///         const maxRetries = 3;  →  inlined by the compiler, deeply immutable
+/// String interpolation — embed variables/expressions inside strings:
+///         '$name'        →  inserts the value of name
+///         '${expr}'      →  inserts the result of any expression
+/// Arrow syntax (=>) — shorthand for a single-expression function body:
+///         String greet(String name) => 'Hello, $name!';
+/// Named parameters { } — wrapped in braces, passed by name at call site:
+///         String repeat(String s, {int times = 2}) ...
+///         repeat('hi', times: 3)   // caller uses the name "times"
+/// switch expression (Dart 3) — returns a value by matching patterns:
+///         final label = switch (n) { 0 => 'zero', _ => 'other' };
 
 void main() {
   _exercise1_variables();

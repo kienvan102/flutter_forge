@@ -4,11 +4,26 @@
 ///         error handling with try/catch, then/catchError chaining,
 ///         FutureOr.
 ///
-/// 💡 Backend Lens:
-///   Future<T>  ≈  Promise<T> (JS) / CompletableFuture<T> (Java) / chan T (Go)
-///   async/await is identical in concept to JS/Python async/await
-///
 /// Run: dart run --enable-asserts 04_async_await/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// async — marks a function as asynchronous; its return type becomes Future<T>
+///         Future<String> fetchUser(int id) async { ... }
+/// await — pauses the current function until the Future completes:
+///         final user = await fetchUser(1);   // suspends here, then resumes
+/// Future<T> — a value that is not yet available; resolves to T or throws
+/// Future.delayed(duration) — a Future that completes after the given duration
+///
+/// Future.wait([f1, f2, f3]) — starts ALL Futures at once (parallel), returns
+///         List<T> when ALL complete.  eagerError: true (default) throws on first
+///         failure; eagerError: false waits for all and collects every error.
+///
+/// .then((value) => ...)    — callback executed when the Future succeeds
+/// .catchError((e) => ...)  — callback executed when the Future throws
+/// try { await f } catch(e) — preferred style; reads like synchronous code
+///
+/// FutureOr<T> — a type that accepts either T or Future<T>;
+///         useful for writing APIs that work in both sync and async contexts
 
 import 'dart:async';
 
@@ -58,8 +73,10 @@ Future<void> _exercise2_errorHandling() async {
       .then((v) => '')
       .catchError((e) => 'REPLACE_ME'); // return e.toString()
 
-  assert(errorMsg.contains('99') || errorMsg.isEmpty == false || errorMsg2.isNotEmpty,
-      '❌ Ex2: should catch exception from fetchUser(99)');
+  assert(errorMsg.contains('99'),
+      '❌ Ex2: errorMsg should contain "99" — use try/catch to capture the error message');
+  assert(errorMsg2.contains('99') && errorMsg == errorMsg2,
+      '❌ Ex2: errorMsg2 should equal errorMsg — use .catchError((e) => e.toString())');
   // Lenient check — either approach works
   print('✅ Exercise 2: Error Handling');
 }

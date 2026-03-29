@@ -5,6 +5,34 @@
 ///         Iterable pipelines, Records (Dart 3).
 ///
 /// Run: dart run --enable-asserts 07_functional/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// First-class functions — functions are values in Dart:
+///         stored in variables:  final fn = (x) => x * 2;
+///         passed as arguments:  list.where(isEven)
+///         returned from funcs:  return () => counter++;
+///
+/// Closure — a function that captures variables from its surrounding scope:
+///         makeCounter creates a local variable `n`; the returned function
+///         remembers and mutates `n` even after makeCounter has returned
+///
+/// Higher-order function — a function that takes or returns another function:
+///         filterAndTransform(items, predicate, transform)
+///
+/// Function composition — combine two functions so one feeds the other:
+///         compose(f, g)(x) = f(g(x))   →   g runs first, then f
+///
+/// typedef — type alias for a function signature; improves readability:
+///         typedef Predicate<T> = bool Function(T);
+///         typedef Transformer<T, R> = R Function(T);
+///
+/// fold — reduces a collection to a single value using an accumulator:
+///         [1, 2, 3].fold(0, (acc, v) => acc + v)  →  6
+///         accumulator starts at init, then acc = fn(acc, nextElement)
+///
+/// Records (Dart 3) — immutable, lightweight value types with named fields:
+///         ({int quotient, int remainder}) r = (quotient: 3, remainder: 2);
+///         access with r.quotient and r.remainder (no class definition needed)
 
 void main() {
   _exercise1_closures();

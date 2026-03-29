@@ -4,12 +4,35 @@
 ///         await for, stream transformations (map, where, take),
 ///         StreamBuilder (conceptual preview for Flutter).
 ///
-/// 💡 Backend Lens:
-///   Stream<T>        ≈  Go channel (chan T) / RxJava Observable / Node.js Readable
-///   StreamController ≈  channel producer / Subject (RxJava)
-///   broadcast stream ≈  pub/sub topic (multiple listeners)
-///
 /// Run: dart run --enable-asserts 05_streams/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// Future → one value, delivered once.   Stream → many values, delivered over time.
+///
+/// async* — marks a function as a stream generator (returns Stream<T>)
+/// yield  — emit one value and pause until the next is requested:
+///         async* { yield 1; yield 2; yield 3; }  →  stream of 1, 2, 3
+/// await for (final v in stream) — consume a stream one value at a time,
+///         suspending between each value (like a for loop but async)
+///
+/// Stream<T> — a sequence of asynchronous values
+///   stream.listen((v) { })     — subscribe; returns a StreamSubscription
+///   stream.toList()            — collect ALL values into a List<T> (awaitable)
+///   stream.where((v) => cond)  — filter: only pass values matching cond
+///   stream.map((v) => expr)    — transform each value with expr
+///   stream.take(n)             — emit first n values then close the stream
+///
+/// StreamController<T> — lets you create a stream and push values manually
+///   controller.stream          — the Stream that listeners subscribe to
+///   controller.add(v)          — push value v to all current listeners
+///   controller.close()         — signals end of stream (no more values)
+///
+/// StreamController<T>.broadcast() — allows MULTIPLE simultaneous listeners
+///   (a regular controller throws StateError if a second listener subscribes)
+///
+/// StreamSubscription<T> — handle returned by stream.listen()
+///   subscription.cancel()      — stop listening and release resources
+///   subscription.asFuture()    — Future that completes when the stream closes
 
 import 'dart:async';
 

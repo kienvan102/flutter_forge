@@ -5,6 +5,42 @@
 ///         const collections.
 ///
 /// Run: dart run --enable-asserts 03_collections/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// List<T> — ordered sequence, duplicates allowed, index-based access
+///   .add(v)           — append v to the end
+///   .removeAt(i)      — remove element at index i (mutates the list)
+///   .sort()           — sort in-place using natural ordering
+///   .contains(v)      — true if v is in the list
+///   .length           — number of elements
+///
+/// Map<K, V> — key-value pairs; each key is unique
+///   map[key]          — lookup, returns null if key not found
+///   map[key] ?? def   — lookup with a fallback default value
+///   .entries          — Iterable<MapEntry<K, V>> for iteration
+///   .keys / .values   — Iterable of all keys / all values
+///
+/// Set<T> — unordered collection, no duplicate elements
+///   .union(other)        — all elements from both sets
+///   .intersection(other) — only elements present in both sets
+///   .difference(other)   — elements in this set but not in other
+///
+/// Iterable<T> — lazy sequence; methods return new Iterables (nothing runs until .toList())
+///   .where((v) => cond)    — filter: keep only elements where cond is true
+///   .map((v) => expr)      — transform: apply expr to every element
+///   .fold(init, (acc, v))  — reduce to one value; init is the starting accumulator
+///   .reduce((acc, v))      — like fold but uses first element as initial value
+///   .any((v) => cond)      — true if at least one element matches cond
+///   .every((v) => cond)    — true if ALL elements match cond
+///   .firstWhere((v) => c)  — first matching element; throws StateError if none found
+///   .toList()              — materialise the Iterable into a List<T>
+///
+/// Spread ...  — insert all elements of a collection inline:
+///   [...list1, ...list2]
+/// Collection if — conditionally include elements:
+///   [if (cond) ...extra, ...base]
+/// Collection for — generate elements with a loop:
+///   [for (var i in [1, 2, 3]) 'item_$i']  →  ['item_1', 'item_2', 'item_3']
 
 void main() {
   _exercise1_list();

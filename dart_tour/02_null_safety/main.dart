@@ -1,14 +1,27 @@
 /// 🎯 Dart Tour — 02: Null Safety
 ///
 /// Topics: nullable types (?), non-nullable, null assertion (!),
-///         late, null-aware operators (??, ?.  , ??=),
+///         late, null-aware operators (??, ?., ??=),
 ///         required named parameters.
 ///
-/// Dart's null safety is sound — the compiler guarantees non-nullable
-/// variables CANNOT be null at runtime. Similar to Kotlin's null safety,
-/// or Rust's Option<T> but built into the type system.
-///
 /// Run: dart run --enable-asserts 02_null_safety/main.dart
+///
+/// ─── CONCEPTS ─────────────────────────────────────────────────────────────
+/// String — non-nullable; compiler guarantees it can NEVER hold null
+/// String? — nullable type; can hold a String value OR null
+///
+/// ! (null assertion operator) — tells Dart "I know this is not null":
+///         maybeNull!.length   →  throws if maybeNull actually is null
+/// late — deferred initialization; Dart trusts you'll assign before first read:
+///         late String connectionString;   set it later in initialize()
+///         throws LateInitializationError if read before assigned
+///
+/// ?? (if-null operator) — returns left if not null, otherwise right:
+///         name ?? 'Anonymous'   →  'Anonymous' only when name is null
+/// ?. (null-safe access) — calls method/property only if not null:
+///         s?.toUpperCase()      →  null when s is null, uppercase otherwise
+/// ??= (null-aware assignment) — assigns only if the variable is currently null:
+///         value ??= 0;          →  sets value to 0 only when value == null
 
 void main() {
   _exercise1_nullableTypes();
